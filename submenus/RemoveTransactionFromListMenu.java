@@ -21,7 +21,7 @@ public class RemoveTransactionFromListMenu extends SubMenu { // Class that exten
         // Prompts user for transaction id to remove
 
         System.out.println();
-        System.out.print("transaction ID to remove: ");
+        System.out.print("Transaction ID to remove: ");
 
         try {
 
@@ -58,78 +58,6 @@ public class RemoveTransactionFromListMenu extends SubMenu { // Class that exten
 
             System.out.println(e.getMessage());
             return promptForTransactionIDToRemove();
-
-        }
-
-    }
-
-    private boolean promptToDisplayTransactionList() {
-
-        // Prompts user whether to display current transaction list
-
-        System.out.print("Display current transaction list? (Y/n): ");
-
-        try {
-
-            // Reads input from scanner and discards rest of tokens
-
-            String input = scnr.next().toLowerCase();
-            scnr.nextLine();
-
-            // Returns whether input is "y" or not
-
-            if (input.equals("y")) {
-                return true;
-            } else if (input.equals("n")) {
-                return false;
-            } else {
-                System.out.println("Invalid option entered, please try again...");
-                return promptToDisplayTransactionList();
-            }
-
-        } catch (Error e) {
-
-            // If an error occurs
-            // Warns user and reprompts for user to try again
-
-            System.out.println(e.getMessage());
-            return promptToDisplayTransactionList();
-
-        }
-
-    }
-
-    private boolean promptToConfirmDeletion() {
-
-        // Prompts user whether to delete transaction
-
-        System.out.print("\nIs this ok? (Y/n): ");
-
-        try {
-
-            // Reads input from scanner and discards rest of tokens
-
-            String input = scnr.next().toLowerCase();
-            scnr.nextLine();
-
-            // Returns whether input is "y" or not
-
-            if (input.equals("y")) {
-                return true;
-            } else if (input.equals("n")) {
-                return false;
-            } else {
-                System.out.println("Invalid option entered, please try again...");
-                return promptToConfirmDeletion();
-            }
-
-        } catch (Error e) {
-
-            // If an error occurs
-            // Warns user and reprompts for user to try again
-
-            System.out.println(e.getMessage());
-            return promptToConfirmDeletion();
 
         }
 
@@ -172,7 +100,7 @@ public class RemoveTransactionFromListMenu extends SubMenu { // Class that exten
 
         // Asks user for confirmation before deleting
 
-        boolean confirmDeletion = promptToConfirmDeletion();
+        boolean confirmDeletion = promptToConfirmOption();
 
         if (confirmDeletion) {
 

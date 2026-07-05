@@ -11,6 +11,42 @@ public abstract class SubMenu extends Menu { // Class that extends menu
 
     // -- == [[ METHODS ]] == -- \\
 
+    public boolean promptToDisplayTransactionList() {
+
+        // Prompts user whether to display current transaction list
+
+        System.out.print("Display current transaction list? (Y/n): ");
+
+        try {
+
+            // Reads input from scanner and discards rest of tokens
+
+            String input = scnr.next().toLowerCase();
+            scnr.nextLine();
+
+            // Returns whether input is "y" or not
+
+            if (input.equals("y")) {
+                return true;
+            } else if (input.equals("n")) {
+                return false;
+            } else {
+                System.out.println("Invalid option entered, please try again...");
+                return promptToDisplayTransactionList();
+            }
+
+        } catch (Error e) {
+
+            // If an error occurs
+            // Warns user and reprompts for user to try again
+
+            System.out.println(e.getMessage());
+            return promptToDisplayTransactionList();
+
+        }
+
+    }
+
     public String promptForString(String promptString) {
 
         // Initializes input variable
@@ -51,6 +87,42 @@ public abstract class SubMenu extends Menu { // Class that extends menu
             return promptForString(promptString);
         } else {
             return input;
+        }
+
+    }
+
+    public boolean promptToConfirmOption() {
+
+        // Prompts user whether something is ok or not
+
+        System.out.print("\nIs this ok? (Y/n): ");
+
+        try {
+
+            // Reads input from scanner and discards rest of tokens
+
+            String input = scnr.next().toLowerCase();
+            scnr.nextLine();
+
+            // Returns whether input is "y" or not
+
+            if (input.equals("y")) {
+                return true;
+            } else if (input.equals("n")) {
+                return false;
+            } else {
+                System.out.println("Invalid option entered, please try again...");
+                return promptToConfirmOption();
+            }
+
+        } catch (Error e) {
+
+            // If an error occurs
+            // Warns user and reprompts for user to try again
+
+            System.out.println(e.getMessage());
+            return promptToConfirmOption();
+
         }
 
     }
