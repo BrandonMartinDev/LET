@@ -65,6 +65,8 @@ public class Transaction {
 
     public static boolean isTransactionTypeStringValid(String typeString) {
 
+        if (typeString.isBlank()) return false;
+
         // Lowercases string provided and
         // checks if either "donation" or "expense" contains the string provided
 
