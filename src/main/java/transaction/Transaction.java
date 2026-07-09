@@ -1,9 +1,15 @@
 package transaction;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Transaction {
 
@@ -65,7 +71,8 @@ public class Transaction {
 
     public static boolean isTransactionTypeStringValid(String typeString) {
 
-        if (typeString.isBlank()) return false;
+        if (typeString.isBlank())
+            return false;
 
         // Lowercases string provided and
         // checks if either "donation" or "expense" contains the string provided
@@ -225,6 +232,223 @@ public class Transaction {
 
     }
 
+    private static Transaction createTransactionFromTextLine(String line) {
+
+        // Initializes newTransaction variable
+
+        Transaction newTransaction = null;
+
+        try {
+
+            // Splits line by comma delimiter
+
+            String[] splitString = line.split(",");
+
+            if (splitString.length != 6)
+                throw new Exception();
+
+            // Gets transaction info from split string array
+
+            int id = Integer.parseInt(splitString[0]);
+            String title = splitString[1];
+            String description = splitString[2];
+            LocalDate date = Transaction.getDateFromString(splitString[3]);
+            double amount = Double.parseDouble(splitString[4]);
+            TransactionType type = Transaction.getTransactionTypeFromString(splitString[5]);
+
+            boolean validInfo = Transaction.isTransactionInfoValid(id, title, description, date, amount, type);
+
+            if (!validInfo)
+                throw new Exception("Transaction info was invalid");
+
+            // Creates new transaction with transaction info
+            // Overwrites transaction id with id provided from line
+
+            newTransaction = new Transaction(title, description, date, amount, type);
+            newTransaction.setId(id);
+
+        } catch (Exception e) {
+
+            // If error occurs, warns user system is skipping line (newTransaction will be
+            // null)
+
+            System.out.println(
+                    String.format("Warning, skipping '%s' because transaction info is not in the correct format",
+                            line));
+        }
+
+        // Returns newly created transaction or null based on success or not
+
+        return newTransaction;
+    }
+
+    private static String getFileExtension(String filePath) {
+
+        // Gets last index of "." and checks to make sure it exists
+
+        int indexOfDot = filePath.lastIndexOf(".");
+
+        // If it doesnt exist, throws error
+
+        if (indexOfDot == -1) {
+            throw new Error("String is not a valid file path");
+        }
+
+        // Returns every character after period (includes period)
+        // Example: "something.txt" becomes ".txt"
+
+        return filePath.substring(indexOfDot);
+
+    }
+
+    public static boolean isFilePathAValidTextFile(String filePath) {
+
+        try {
+
+            // Gets file extension from filePath provided
+            // checks to make sure its a txt file
+
+            String fileExtension = getFileExtension(filePath);
+            if (!fileExtension.equals(".txt"))
+                return false;
+
+        } catch (Error e) {
+            // If an error occurs getting file extension, returns false
+            return false;
+        }
+
+        // Creates path from filePath after its a text file has been confirmed
+        // Makes sure path is valid and file exists
+
+        Path path = Paths.get(filePath);
+        boolean exists = Files.exists(path);
+
+        return exists;
+
+    }
+
+    // -- == [[ STATIC CRUD METHODS ]] == -- \\
+
+    public static ArrayList<Transaction> getTransactionsFromTextFile(String filePath) {
+
+        // Initializes empty arraylist of transactions and text file scanner
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        Scanner textFileScnr = null;
+
+        try {
+
+            boolean validTextFile = isFilePathAValidTextFile(filePath);
+
+            if (!validTextFile) {
+                throw new Exception("'" + filePath + "' is not a valid text file path!");
+            }
+
+            // Creates new scanner that reads text file
+
+            textFileScnr = new Scanner(new File(filePath));
+
+            // Loops through every line in text file
+
+            while (textFileScnr.hasNextLine()) {
+
+                // Gets current line in text file and attempts to create transaction from it
+
+                String currentLine = textFileScnr.nextLine();
+                Transaction newTransaction = createTransactionFromTextLine(currentLine);
+
+                // If the transaction was successfully created from text file line
+                // System adds it to temporary transactions arraylist (NOT
+                // Transaction.TransactionList)
+
+                if (newTransaction != null) {
+                    transactions.add(newTransaction);
+                }
+
+            }
+
+        } catch (Exception e) {
+
+            // If an error occurs (most likely from attempting to read file)
+            // then return nothing
+
+            return null;
+
+        } finally {
+
+            // Close file scanner
+
+            if (textFileScnr != null) {
+                textFileScnr.close();
+            }
+
+        }
+
+        return transactions;
+
+    }
+
+    public static Transaction addTransactionToList(Transaction transactionToAdd) {
+
+        // Adds transaction provided to list
+        // Gets transaction from list and returns it
+
+        TransactionList.put(transactionToAdd.getId(), transactionToAdd);
+        return TransactionList.getOrDefault(transactionToAdd.getId(), null);
+
+    }
+
+    public static Transaction getTransactionByID(int id) {
+
+        // Gets transaction from list and returns it (or null if no such transaction
+        // exists)
+
+        return TransactionList.getOrDefault(id, null);
+
+    }
+
+    public static boolean removeTransactionFromList(int id) {
+
+        // Attempts to remove transaction from transaction list hashmap
+        // If successful, will return true
+        // If not, will return false
+
+        try {
+            TransactionList.remove(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Something went wrong when trying to remove transaction '" + id + "' from list");
+            return false;
+        }
+
+    }
+
+    public static Transaction editTransactionInList(int id, Transaction newTransactionInfo) {
+
+        try {
+
+            // Gets transaction from list, if transaction does not exist then
+            // throw exception
+
+            Transaction transactionToEdit = getTransactionByID(id);
+
+            if (transactionToEdit == null) {
+                throw new Exception("Transaction with ID '" + id + "' does not exist!");
+            }
+
+            // Overwrite transaction info with new transaction info
+            // Get transaction from list and return it
+
+            TransactionList.put(id, newTransactionInfo);
+            return TransactionList.getOrDefault(id, null);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
     // -- == [[ VARIABLES ]] == -- \\
 
     private int id; // 7 Digit unique ID number for transaction
@@ -332,5 +556,12 @@ public class Transaction {
         return 1000000 + (new Random().nextInt(9000000));
 
     }
+
+    // TODO:
+    //
+    // * Refactor crud operations to be in this transaction class instead of having
+    // menus do operations on transaction list directly.
+    //
+    // * Add tests for those crud operations
 
 }

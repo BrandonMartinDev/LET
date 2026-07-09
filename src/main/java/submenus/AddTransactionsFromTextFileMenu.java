@@ -32,51 +32,6 @@ public class AddTransactionsFromTextFileMenu extends SubMenu { // Class that ext
 
     }
 
-    private String getFileExtension(String filePath) {
-
-        // Gets last index of "." and checks to make sure it exists
-
-        int indexOfDot = filePath.lastIndexOf(".");
-
-        // If it doesnt exist, throws error
-
-        if (indexOfDot == -1) {
-            throw new Error("String is not a valid file path");
-        }
-
-        // Returns every character after period (includes period)
-        // Example: "something.txt" becomes ".txt"
-
-        return filePath.substring(indexOfDot);
-
-    }
-
-    private boolean isFilePathAValidTextFile(String filePath) {
-
-        try {
-
-            // Gets file extension from filePath provided
-            // checks to make sure its a txt file
-
-            String fileExtension = getFileExtension(filePath);
-            if (!fileExtension.equals(".txt"))
-                return false;
-
-        } catch (Error e) {
-            // If an error occurs getting file extension, returns false
-            return false;
-        }
-
-        // Creates path from filePath after its a text file has been confirmed
-        // Makes sure path is valid and file exists
-
-        Path path = Paths.get(filePath);
-        boolean exists = Files.exists(path);
-
-        return exists;
-
-    }
-
     private String promptForTransactionsTextFile() {
 
         // Initializes input variable
@@ -118,115 +73,12 @@ public class AddTransactionsFromTextFileMenu extends SubMenu { // Class that ext
         // Checks if input is a valid text file path
         // If it isn't, warns user and reprompts
 
-        if (!isFilePathAValidTextFile(input)) {
+        if (!Transaction.isFilePathAValidTextFile(input)) {
             System.out.println(String.format("'%s' is not a valid text file path!", input));
             return promptForTransactionsTextFile();
         }
 
         return input;
-
-    }
-
-    private Transaction createTransactionFromTextLine(String line) {
-
-        // Initializes newTransaction variable
-
-        Transaction newTransaction = null;
-
-        try {
-
-            // Splits line by comma delimiter
-
-            String[] splitString = line.split(",");
-
-            if (splitString.length != 6)
-                throw new Exception();
-
-            // Gets transaction info from split string array
-
-            int id = Integer.parseInt(splitString[0]);
-            String title = splitString[1];
-            String description = splitString[2];
-            LocalDate date = Transaction.getDateFromString(splitString[3]);
-            double amount = Double.parseDouble(splitString[4]);
-            TransactionType type = Transaction.getTransactionTypeFromString(splitString[5]);
-
-            boolean validInfo = Transaction.isTransactionInfoValid(id, title, description, date, amount, type);
-
-            if (!validInfo)
-                throw new Exception("Transaction info was invalid");
-
-            // Creates new transaction with transaction info
-            // Overwrites transaction id with id provided from line
-
-            newTransaction = new Transaction(title, description, date, amount, type);
-            newTransaction.setId(id);
-
-        } catch (Exception e) {
-
-            // If error occurs, warns user system is skipping line (newTransaction will be
-            // null)
-
-            System.out.println(
-                    String.format("Warning, skipping '%s' because transaction info is not in the correct format",
-                            line));
-        }
-
-        // Returns newly created transaction or null based on success or not
-
-        return newTransaction;
-    }
-
-    private ArrayList<Transaction> loadTransactionsFromTextFile(String filePath) {
-
-        // Initializes empty arraylist of transactions and text file scanner
-
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        Scanner textFileScnr = null;
-
-        try {
-
-            // Creates new scanner that reads text file
-
-            textFileScnr = new Scanner(new File(filePath));
-
-            // Loops through every line in text file
-
-            while (textFileScnr.hasNextLine()) {
-
-                // Gets current line in text file and attempts to create transaction from it
-
-                String currentLine = textFileScnr.nextLine();
-                Transaction newTransaction = createTransactionFromTextLine(currentLine);
-
-                // If the transaction was successfully created from text file line
-                // System adds it to temporary transactions arraylist (NOT
-                // Transaction.TransactionList)
-
-                if (newTransaction != null) {
-                    transactions.add(newTransaction);
-                }
-
-            }
-
-        } catch (Exception e) {
-
-            // If an error occurs (most likely from attempting to read file)
-            // then return nothing
-
-            return null;
-
-        } finally {
-
-            // Close file scanner
-
-            if (textFileScnr != null) {
-                textFileScnr.close();
-            }
-
-        }
-
-        return transactions;
 
     }
 
@@ -278,7 +130,7 @@ public class AddTransactionsFromTextFileMenu extends SubMenu { // Class that ext
 
         // Gets array list of transactions from text file
 
-        ArrayList<Transaction> transactions = loadTransactionsFromTextFile(filePath);
+        ArrayList<Transaction> transactions = Transaction.getTransactionsFromTextFile(filePath);
 
         // Verifies temp transactions list exists and has transactions
 
@@ -317,7 +169,7 @@ public class AddTransactionsFromTextFileMenu extends SubMenu { // Class that ext
             // TransactionList hashmap
 
             for (Transaction transaction : transactions) {
-                Transaction.TransactionList.put(transaction.getId(), transaction);
+                Transaction.addTransactionToList(transaction);
             }
 
             // Tell user how many transactions were added to hashmap

@@ -109,7 +109,7 @@ public class RemoveTransactionFromListMenu extends SubMenu { // Class that exten
             // Tell user who was removed from list and new list size
 
             System.out.println();
-            Transaction.TransactionList.remove(idToRemove);
+            Transaction.removeTransactionFromList(idToRemove);
             System.out.println(String.format("Removed '%s' from transaction list", transactionToRemove.getTitle()));
             System.out.println(String.format("New transaction list size: %s", Transaction.TransactionList.size()));
             System.out.println();

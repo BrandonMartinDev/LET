@@ -187,8 +187,10 @@ public class AddTransactionToListMenu extends SubMenu { // Class that extends Su
         Transaction newTransaction;
 
         try {
+
             newTransaction = new Transaction(title, description, date, amount,
                     type);
+
         } catch (Exception e) {
             System.out.println("There was an error creating transaction, please try again...");
             promptToSwitchToMainMenu();
@@ -202,7 +204,7 @@ public class AddTransactionToListMenu extends SubMenu { // Class that extends Su
 
         // Adds transaction to list and tell user
 
-        Transaction.TransactionList.put(newTransaction.getId(), newTransaction);
+        Transaction.addTransactionToList(newTransaction);
         System.out.println("\nAdded transaction to list\n");
 
         // Prompt to switch back to main menu

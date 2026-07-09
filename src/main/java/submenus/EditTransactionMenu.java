@@ -336,7 +336,7 @@ public class EditTransactionMenu extends SubMenu { // Class that extends SubMenu
         // Updates transaction in TransactionList hashmap and tells user transaction was
         // updated successfully
 
-        Transaction.TransactionList.put(idToEdit, newTransaction);
+        Transaction.editTransactionInList(idToEdit, newTransaction);
         System.out.println(
                 "Edited '" + transactionToEdit.getTitle() + "' (" + transactionToEdit.getId() + ") successfully!");
 
