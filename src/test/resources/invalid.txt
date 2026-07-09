@@ -1,0 +1,11 @@
+1245783,Keyboard,N/A,2026-07-03-23.32,DEPOSIT
+1245781,Keyboard,Some description, with a comma,2026-07-03,23.32,DEPOSIT
+1245782,Keyboard,Some description without a comma,2026-07-03,23.32,DEPOSIT
+1245785-Avery Jones-1919 Pine Lance Blvd. Oviedo, FL 32478-$1.36 lol
+124578,Some Name,Kindly donated at the fair festival,1970-01-01,5,EXPENSE
+1245786,,Kindly donated at the fair festival,1970-01-01,5,EXPENSE
+1245787,Some Name,Kindly donated at the fair festival,--1970-01-01,5,EXPENSE
+1245788,Some Name,Kindly donated at the fair festival,1970-01-01,-3,EXPENSE
+1245799,Some Name,Kindly donated at the fair festival,a,1970-01-01,5,d
+1245794,Some Name,Kindly donated at the fair festival,1970- 01-01,5,EXPENSE
+1245754,Some Name,Kindly donated at the fair festival,1970-01-01,5,nottype
