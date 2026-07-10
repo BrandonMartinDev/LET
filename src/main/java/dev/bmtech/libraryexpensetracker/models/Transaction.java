@@ -1,4 +1,4 @@
-package transaction;
+package dev.bmtech.libraryexpensetracker.models;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -556,12 +556,5 @@ public class Transaction {
         return 1000000 + (new Random().nextInt(9000000));
 
     }
-
-    // TODO:
-    //
-    // * Refactor crud operations to be in this transaction class instead of having
-    // menus do operations on transaction list directly.
-    //
-    // * Add tests for those crud operations
 
 }

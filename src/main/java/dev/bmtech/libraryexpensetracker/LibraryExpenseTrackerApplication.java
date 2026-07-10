@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LibraryExpenseTrackerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LibraryExpenseTrackerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LibraryExpenseTrackerApplication.class, args);
+    }
 
 }
