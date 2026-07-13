@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/forms.css" />
+    <link rel="stylesheet" href="css/quickstats.css" />
+    <link rel="stylesheet" href="css/transaction-list.css" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Library Expense Tracker</title>
+
+    <script src="js/handle-data.js"></script>
+    <script src="js/create-form.js"></script>
+    <script src="js/edit-form.js"></script>
+    <script src="js/refresh-data.js"></script>
+
+</head>
+
+<body>
+
+    <!-- 
+        I would've created a react-ive frontend if I had more time, 
+        but this will have to do
+    -->
+
+    <div class="container">
+
+        <div class="content-wrapper">
+
+            <aside class="left">
+
+                <div class="create-new-transaction form">
+
+                    <h2>Create New Transaction</h2>
+
+                    <span id="create-error-wrapper"></span>
+                    <span id="create-success-wrapper"></span>
+
+                    <form role="form" onsubmit="return submitCreateTransaction(event);">
+
+                        <input id="create-title" type="text" placeholder="Title" minlength="1" maxlength="150">
+
+                        <textarea id="create-description" placeholder="Description" minlength="1"
+                            maxlength="1000"></textarea>
+
+                        <div class="one-line">
+
+                            <div class="input-box">
+                                <input type="radio" name="create-selection" id="create-donation" value="DONATION" />
+                                <label for="create-donation">DONATION</label>
+                            </div>
+
+                            <div class="input-box">
+                                <input type="radio" name="create-selection" id="create-expense" value="EXPENSE" />
+                                <label for="create-expense">EXPENSE</label>
+                            </div>
+
+                            <input id="create-amount" type="number" step=".01" placeholder="Amount" min="0"
+                                max="1000000000" value="0">
+
+                        </div>
+
+                        <div class="one-line">
+                            <input type="date" id="create-date">
+                            <button type="submit" id="create-submit">Create</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="edit-transaction form">
+
+                    <div class="one-line">
+                        <h2>Edit Transaction</h2>
+                        <p id="edit-id">xxxxxxx</p>
+                    </div>
+
+                    <span id="edit-error-wrapper"></span>
+                    <span id="edit-success-wrapper"></span>
+
+                    <form role="form" onsubmit="return submitEditTransaction(event);">
+                        <!-- CHANGE THIS ^^ -->
+
+                        <input id="edit-title" type="text" placeholder="New Title" minlength="1" maxlength="150">
+
+                        <textarea id="edit-description" placeholder="New Description" minlength="1"
+                            maxlength="1000"></textarea>
+
+                        <div class="one-line">
+
+                            <div class="input-box">
+                                <input type="radio" name="edit-selection" id="edit-donation" value="DONATION" />
+                                <label for="edit-donation">DONATION</label>
+                            </div>
+
+                            <div class="input-box">
+                                <input type="radio" name="edit-selection" id="edit-expense" value="EXPENSE" />
+                                <label for="edit-expense">EXPENSE</label>
+                            </div>
+
+                            <input id="edit-amount" type="number" step=".01" placeholder="New Amount" min="0"
+                                max="1000000000" value="0">
+
+                        </div>
+
+                        <div class="one-line">
+                            <input type="date" id="edit-date">
+                            <button type="submit" id="edit-submit">Save Edits</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </aside>
+
+            <main class="right">
+
+                <div class="quick-stats-dashboard">
+
+                    <h2 class="net-worth">
+                        Net Worth: $<span id="networth-display"></span>
+                    </h2>
+
+                    <h2 class="total-donations">
+                        Donations: +$<span id="donations-display"></span>
+                    </h2>
+
+                    <h2 class="total-expenses">
+                        Expenses: -$<span id="expenses-display"></span>
+                    </h2>
+
+                </div>
+
+                <div class="transaction-list-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th class="id">ID#</th>
+                                <th class="title">Title</th>
+                                <th class="description">Description</th>
+                                <th class="type">Type</th>
+                                <th class="date">Date</th>
+                                <th class="amount">Amount</th>
+                                <th class="delete-button-wrapper"></th>
+                            </tr>
+                        </thead>
+
+                        <div class="tbody-wrapper">
+                            <tbody>
+                            </tbody>
+                        </div>
+
+                    </table>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

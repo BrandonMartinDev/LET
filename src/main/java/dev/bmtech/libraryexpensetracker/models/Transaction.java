@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,6 +125,8 @@ public class Transaction {
 
     // -- == [[ STATIC VARIABLES ]] == -- \\
 
+    private static DecimalFormat df = new DecimalFormat("#.##");
+
     public static HashMap<Integer, Transaction> TransactionList = new HashMap<Integer, Transaction>(); // TransactionList
                                                                                                        // hashmap, this
                                                                                                        // is
@@ -194,7 +197,7 @@ public class Transaction {
 
         }
 
-        return totalExpenses;
+        return Double.parseDouble(df.format(totalExpenses));
 
     }
 
@@ -217,7 +220,7 @@ public class Transaction {
 
         }
 
-        return totalDonations;
+        return Double.parseDouble(df.format(totalDonations));
 
     }
 
@@ -228,7 +231,7 @@ public class Transaction {
         double totalDonations = getTotalDonations();
         double totalExpenses = getTotalExpenses();
 
-        return totalDonations - totalExpenses;
+        return Double.parseDouble(df.format(totalDonations - totalExpenses));
 
     }
 

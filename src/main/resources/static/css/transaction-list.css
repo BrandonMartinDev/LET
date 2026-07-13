@@ -1,0 +1,107 @@
+.transaction-list-wrapper {
+
+    overflow: auto;
+
+    height: 100%;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+    background-color: var(--gray-700);
+}
+
+tr {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    width: 100%;
+
+    cursor: pointer;
+
+}
+
+tr.dark {
+    background-color: var(--gray-700);
+}
+
+tr.light {
+    background-color: var(--gray-500);
+}
+
+th {
+    padding: 1rem 0;
+}
+
+th,
+td {
+
+    flex: 1;
+
+    text-wrap-mode: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+th.id,
+td.id {
+    max-width: 7.5rem;
+    text-align: left;
+}
+
+th.title,
+td.title {
+    max-width: 10rem;
+    text-align: left;
+}
+
+th.description,
+td.description {
+    max-width: 15rem;
+    text-align: left;
+}
+
+th.type,
+td.type {
+    max-width: 10rem;
+    text-align: center;
+}
+
+th.date,
+td.date {
+    max-width: 10rem;
+    text-align: center;
+}
+
+th.amount,
+td.amount {
+    max-width: 10rem;
+    text-align: right;
+}
+
+th.delete-button-wrapper,
+td.delete-button-wrapper {
+    max-width: 4rem;
+    text-align: right;
+}
+
+
+td.delete-button-wrapper button {
+    cursor: pointer;
+    background: none;
+    padding: 1rem;
+}
+
+td.delete-button-wrapper button img {
+    height: 2rem;
+    width: 1.66rem;
+}

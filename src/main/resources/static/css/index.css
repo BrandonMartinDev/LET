@@ -1,0 +1,130 @@
+/* IMPORTS */
+
+
+
+
+/* GLOBAL VARIABLES */
+
+:root {
+
+    /* COLORS */
+
+    --gray-100: #aaaaaa;
+    --gray-300: #494949;
+    --gray-500: #303030;
+    --gray-700: #1a1a1a;
+    --gray-900: #0f0f0f;
+
+    --green-500: #4f922f;
+    --red-500: #8f1a1a;
+    --blue-500: #1c69ce;
+
+    /* FONTS */
+
+    /* OTHER */
+
+    --border-radius: .5rem;
+
+}
+
+
+/* CSS RESET */
+
+* {
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+
+    scrollbar-width: thin;
+    scrollbar-color: gray transparent;
+
+    outline: none;
+
+}
+
+html,
+body,
+#root {
+    height: 100%;
+    background-color: var(--gray-900);
+    color: white;
+    height: 100%;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+
+    font-family: var(--rubik);
+    font-weight: 300;
+    font-size: 1.6rem;
+
+}
+
+img {
+    max-width: 100%;
+}
+
+
+
+/* GLOBAL STYLES */
+
+.container {
+
+    max-width: 90em;
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+body .container {
+
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+
+}
+
+body .content-wrapper {
+
+    max-height: 70rem;
+    height: min-content;
+    width: 100%;
+
+    display: flex;
+    align-items: top;
+    gap: 5rem;
+
+    overflow: hidden;
+
+}
+
+aside.left,
+main.right {
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 5rem;
+
+}
+
+main.right {
+    width: 100%;
+    overflow: auto;
+}
+
+.one-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}

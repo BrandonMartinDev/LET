@@ -1,0 +1,38 @@
+.quick-stats-dashboard {
+
+    display: grid;
+
+    grid-template-areas:
+        "networth networth"
+        "donations expenses";
+
+    text-align: center;
+    gap: 1rem;
+
+}
+
+.quick-stats-dashboard>h2 {
+
+    background-color: var(--gray-700);
+
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    font-weight: 400;
+
+}
+
+.quick-stats-dashboard>h2>span {
+    font-weight: 900;
+}
+
+.quick-stats-dashboard .net-worth {
+    grid-area: networth;
+}
+
+.quick-stats-dashboard .total-donations {
+    grid-area: donations;
+}
+
+.quick-stats-dashboard .total-expenses {
+    grid-area: expenses;
+}
