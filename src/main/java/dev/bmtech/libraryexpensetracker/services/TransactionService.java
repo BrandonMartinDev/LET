@@ -1,15 +1,18 @@
 package dev.bmtech.libraryexpensetracker.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import dev.bmtech.libraryexpensetracker.models.Transaction;
-import dev.bmtech.libraryexpensetracker.models.Transaction.TransactionType;
+import dev.bmtech.libraryexpensetracker.models.TransactionRepository;
 
 @Service
 public class TransactionService {
+
+    @Autowired
+    TransactionRepository repository;
 
     // Quick Stats
 
@@ -27,11 +30,14 @@ public class TransactionService {
 
     // CRUD operations
 
-    public ArrayList<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
 
-        // Converts the transaction list hashmap to an array list and returns it
+        // Gets all transactions from database and returns them
 
-        ArrayList<Transaction> transactionList = new ArrayList<Transaction>(Transaction.TransactionList.values());
+        System.out.println("GETTING TRANSACTIONS FROM REPO");
+        List<Transaction> transactionList = repository.findAll();
+        System.out.println(transactionList);
+
         return transactionList;
 
     }
@@ -54,25 +60,26 @@ public class TransactionService {
             return null;
         }
 
-        // Adds transaction to transaction list and returns newly created transaction
+        // Adds transaction to transaction database and returns newly created
+        // transaction
 
-        Transaction newTransaction = Transaction.addTransactionToList(transactionInfo);
-        return newTransaction;
+        Transaction savedTransaction = repository.save(transactionInfo);
+        return savedTransaction;
 
     }
 
     public boolean deleteTransaction(int transactionID) {
 
-        // Validate id num provided is a valid transaction id
+        // Attempts to remove the transaction in the database and returns
+        // true if was successful
+        // If it cannot delete the transaction or errors, will return false
 
-        if (!Transaction.isIDNumValid(transactionID)) {
+        try {
+            repository.deleteById(transactionID);
+            return true;
+        } catch (Exception e) {
             return false;
         }
-
-        // Removes transaction from transaction list
-
-        boolean deletedSuccessfully = Transaction.removeTransactionFromList(transactionID);
-        return deletedSuccessfully;
 
     }
 
@@ -94,8 +101,22 @@ public class TransactionService {
             return null;
         }
 
-        Transaction newTransaction = Transaction.editTransactionInList(transactionID, newTransactionInfo);
-        return newTransaction;
+        // Gets transaction in database
+
+        Transaction transactionFromDB = repository.findById(transactionID).get();
+
+        if (transactionFromDB == null) {
+            System.out.println("Could not find transaction with id '" + transactionID + "'");
+            return null;
+        }
+
+        // Overwrites transaction data with new transaction info and returns edited
+        // transaction info
+
+        newTransactionInfo.setId(transactionID);
+        Transaction editedTransaction = repository.save(newTransactionInfo);
+
+        return editedTransaction;
 
     }
 

@@ -12,6 +12,16 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "transaction")
 public class Transaction {
 
     // -- == [[ ENUMS ]] == -- \\
@@ -99,10 +109,12 @@ public class Transaction {
 
         // Checks each field and makes sure they are valid
 
-        boolean validID = isIDNumValid(id);
+        // Skips validating id because id is automatically handled by spring JPA
 
-        if (!validID)
-            return false;
+        // boolean validID = isIDNumValid(id);
+
+        // if (!validID)
+        // return false;
 
         boolean validTitle = isTitleValid(title);
 
@@ -454,14 +466,31 @@ public class Transaction {
 
     // -- == [[ VARIABLES ]] == -- \\
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_generator")
+    @SequenceGenerator(name = "id_generator", sequenceName = "id_sequence", allocationSize = 1, initialValue = 1_000_000)
     private int id; // 7 Digit unique ID number for transaction
+
+    @Column(name = "title", nullable = false, length = 100)
     private String title; // Title of the transaction
+
+    @Column(name = "description", nullable = false, length = 1000)
     private String description; // Description of the transaction
+
+    @Column(name = "date", nullable = false)
     private LocalDate date; // Date the transaction took place
+
+    @Column(name = "amount", nullable = false)
     private double amount = 0; // Amount the transaction involved, default is 0
+
+    @Column(name = "type", nullable = false)
     private TransactionType type; // Type of the transaction, either "DONATION" or "EXPENSE"
 
     // -- == [[ CONSTRUCTORS ]] == -- \\
+
+    public Transaction() {
+        
+    }
 
     public Transaction(String title, String description, LocalDate date, double amount, TransactionType type)
             throws Exception {
@@ -471,9 +500,13 @@ public class Transaction {
         }
 
         // Generates unique id
+        // this.id = generateId();
+
+        // NO LONGER USES generateID(), spring data JPA will auto generate ids for
+        // database table
+
         // sets values to provided values
 
-        this.id = generateId();
         this.title = title;
         this.description = description;
         this.date = date;

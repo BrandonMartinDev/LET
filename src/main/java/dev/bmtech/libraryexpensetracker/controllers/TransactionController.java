@@ -6,7 +6,7 @@ import dev.bmtech.libraryexpensetracker.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class TransactionController {
@@ -15,11 +15,11 @@ public class TransactionController {
     TransactionService service;
 
     @GetMapping("/api/transaction")
-    public ArrayList<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
 
         // Gets transactions list from TransactionService and returns transactions;
 
-        ArrayList<Transaction> transactions = service.getTransactions();
+        List<Transaction> transactions = service.getTransactions();
         return transactions;
 
     }

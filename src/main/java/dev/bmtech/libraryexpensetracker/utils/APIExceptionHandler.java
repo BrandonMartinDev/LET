@@ -2,6 +2,7 @@ package dev.bmtech.libraryexpensetracker.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,20 @@ public class APIExceptionHandler {
 
         Map<String, String> error = new HashMap<>();
         error.put("message", "Request body is missing or in an invalid format");
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
+    }
+
+    // 404, user did not provide a valid request body
+    // Example: "PUT /transaction/1234567", where id is an id that doesn't exist
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Map<String, String>> handleNoSuchElementException(
+            NoSuchElementException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put("message", "Transaction does not exist");
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 
