@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dev.bmtech.libraryexpensetracker.models.Transaction;
 import dev.bmtech.libraryexpensetracker.models.TransactionRepository;
+import dev.bmtech.libraryexpensetracker.models.Transaction.TransactionType;
 
 @Service
 public class TransactionService {
@@ -17,15 +18,61 @@ public class TransactionService {
     // Quick Stats
 
     public double getExpenses() {
-        return Transaction.getTotalExpenses();
+
+        // Gets transaction list from database
+
+        List<Transaction> transactions = getTransactions();
+
+        // Loops through every transaction in db
+
+        double expensesTotal = 0;
+
+        for (Transaction currentTransaction : transactions) {
+
+            // If the current transaction's type is expense, add the current transaction's
+            // amount to expensesTotal
+
+            if (currentTransaction.getType() == TransactionType.EXPENSE) {
+                expensesTotal += currentTransaction.getAmount();
+            }
+
+        }
+
+        return expensesTotal;
     }
 
     public double getDonations() {
-        return Transaction.getTotalDonations();
+
+        // Gets transaction list from database
+
+        List<Transaction> transactions = getTransactions();
+
+        // Loops through every transaction in db
+
+        double donationTotal = 0;
+
+        for (Transaction currentTransaction : transactions) {
+
+            // If the current transaction's type is donation, add the current transaction's
+            // amount to donationTotal
+
+            if (currentTransaction.getType() == TransactionType.DONATION) {
+                donationTotal += currentTransaction.getAmount();
+            }
+
+        }
+
+        return donationTotal;
+
     }
 
     public double getNetWorth() {
-        return Transaction.getNetWorth();
+
+        double donations = getDonations();
+        double expenses = getExpenses();
+
+        return donations - expenses;
+        
     }
 
     // CRUD operations
