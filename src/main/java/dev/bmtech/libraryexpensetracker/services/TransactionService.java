@@ -39,6 +39,7 @@ public class TransactionService {
         }
 
         return expensesTotal;
+
     }
 
     public double getDonations() {
@@ -83,7 +84,6 @@ public class TransactionService {
 
         System.out.println("GETTING TRANSACTIONS FROM REPO");
         List<Transaction> transactionList = repository.findAll();
-        System.out.println(transactionList);
 
         return transactionList;
 

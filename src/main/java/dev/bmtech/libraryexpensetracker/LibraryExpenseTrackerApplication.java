@@ -38,12 +38,6 @@ public class LibraryExpenseTrackerApplication {
 
     public static void main(String[] args) {
 
-        // TODO: remove below later
-
-//        System.setProperty("DB_URL", "jdbc:mysql://localhost:3306/LET_MySQL_DB");
-//        System.setProperty("DB_USERNAME", "admin");
-//        System.setProperty("DB_PASSWORD", "1624");
-
         setDBInfoFromUser();
 
         SpringApplication.run(LibraryExpenseTrackerApplication.class, args);
