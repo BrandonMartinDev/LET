@@ -9,14 +9,27 @@ import dev.bmtech.libraryexpensetracker.models.Transaction;
 import dev.bmtech.libraryexpensetracker.models.TransactionRepository;
 import dev.bmtech.libraryexpensetracker.models.Transaction.TransactionType;
 
+/**
+ * Spring Boot Service that handles the business logic for transactions.
+ * However,
+ * this service does <b>NOT</b> directly interact with the database
+ */
 @Service
 public class TransactionService {
 
     @Autowired
     TransactionRepository repository;
 
-    // Quick Stats
+    // -- == [[ QUICK STATS ]] == -- \\
 
+    /**
+     * <p>
+     * Adds up all transactions that have a type of "EXPENSE" and returns the sum
+     * </p>
+     * 
+     * @return <b>double expensesTotal:</b> The total amount of money the library
+     *         has spent on expenses
+     */
     public double getExpenses() {
 
         // Gets transaction list from database
@@ -42,6 +55,14 @@ public class TransactionService {
 
     }
 
+    /**
+     * <p>
+     * Adds up all transactions that have a type of "DONATION" and returns the sum
+     * </p>
+     * 
+     * @return <b>double expensesTotal:</b> The total amount of money the library
+     *         has received in donations
+     */
     public double getDonations() {
 
         // Gets transaction list from database
@@ -67,17 +88,36 @@ public class TransactionService {
 
     }
 
+    /**
+     * <p>
+     * Returns the difference of donations total minus expenses total
+     * </p>
+     * 
+     * @return <b>double networth:</b> The net worth of the library
+     */
     public double getNetWorth() {
 
         double donations = getDonations();
         double expenses = getExpenses();
 
-        return donations - expenses;
-        
+        double networth = donations - expenses;
+
+        return networth;
+
     }
 
-    // CRUD operations
+    // -- == [[ CRUD OPERATIONS ]] == -- \\
 
+    /**
+     * <p>
+     * Gets all transactions from the database through TransactionRepository and
+     * returns them as a List of Transaction objects
+     * </p>
+     * 
+     * @return <b>List<Transaction> transactionList:</b> All transactions in the
+     *         database
+     * @see TransactionRepository
+     */
     public List<Transaction> getTransactions() {
 
         // Gets all transactions from database and returns them
@@ -89,6 +129,18 @@ public class TransactionService {
 
     }
 
+    /**
+     * <p>
+     * Creates a new transaction in the database through the TransactionRepository
+     * with the provided transactionInfo
+     * </p>
+     * 
+     * @param transactionInfo Transaction info that will be used to create the new
+     *                        transaction
+     * 
+     * @return <b>Transaction savedTransaction:</b> The newly created transaction
+     * @see TransactionRepository
+     */
     public Transaction createTransaction(Transaction transactionInfo) {
 
         // Validates data
@@ -115,6 +167,18 @@ public class TransactionService {
 
     }
 
+    /**
+     * <p>
+     * Removes a transaction from the database through the TransactionRepository
+     * with the provided transactionID
+     * </p>
+     * 
+     * @param transactionID The ID of the transaction to be deleted
+     * 
+     * @return <b>boolean successfullyDeleted:</b> Whether the transaction was
+     *         successfully deleted or not
+     * @see TransactionRepository
+     */
     public boolean deleteTransaction(int transactionID) {
 
         // Attempts to remove the transaction in the database and returns
@@ -130,6 +194,20 @@ public class TransactionService {
 
     }
 
+    /**
+     * <p>
+     * Edits a transaction in the database through the TransactionRepository
+     * with the provided transactionID and newTransactionInfo
+     * </p>
+     * 
+     * @param transactionID      The ID of the transaction to be edited
+     * @param newTransactionInfo new transaction info that will overwrite the
+     *                           current transaction's info
+     * 
+     * @return <b>Transaction editedTransaction:</b> The edited transaction's new
+     *         info
+     * @see TransactionRepository
+     */
     public Transaction editTransaction(int transactionID, Transaction newTransactionInfo) {
 
         // Validates new data

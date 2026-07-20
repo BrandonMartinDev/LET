@@ -1,19 +1,27 @@
 package dev.bmtech.libraryexpensetracker.controllers;
 
-import dev.bmtech.libraryexpensetracker.services.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Spring Boot Controller that handles requests for the LET's UI (index.html
+ * file)
+ */
 @Controller
 public class UIController {
 
-    @Autowired
-    TransactionService service;
-
+    /**
+     * 
+     * <b>GET /</b>
+     * 
+     * <p>
+     * Returns the main index.html page
+     * </p>
+     * 
+     * @return index.html
+     */
     @GetMapping("/")
-    public String mainPage(Model model) {
+    public String mainPage() {
         // Returns index html page
         return "index";
     }

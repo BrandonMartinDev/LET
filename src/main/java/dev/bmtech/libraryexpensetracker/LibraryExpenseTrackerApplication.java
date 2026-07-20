@@ -5,9 +5,16 @@ import java.util.Scanner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Main class for the Library Expense Tracker (LET).
+ */
 @SpringBootApplication
 public class LibraryExpenseTrackerApplication {
 
+    /**
+     * Gets database connection string, username, and password from user and then
+     * sets system properties based on the provided values
+     */
     private static void setDBInfoFromUser() {
 
         try (Scanner scnr = new Scanner(System.in)) {
@@ -36,6 +43,12 @@ public class LibraryExpenseTrackerApplication {
 
     }
 
+    /**
+     * Sets system properties based on user input and then starts the spring boot
+     * server
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
 
         setDBInfoFromUser();

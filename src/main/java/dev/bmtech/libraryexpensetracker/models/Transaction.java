@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import dev.bmtech.libraryexpensetracker.services.TransactionService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,21 @@ public class Transaction {
 
     // -- == [[ VALIDATORS ]] == -- \\
 
+    /**
+     * Validates "id" field
+     * 
+     * <p>
+     * A valid transaction id is:
+     * </p>
+     * 
+     * <ol>
+     * <li>An integer</li>
+     * <li>7 Digits long</li>
+     * </ol>
+     * 
+     * @param idNum Integer that represents the id to be validated
+     * @return <b>boolean idNumIsValid:</b> Whether integer provided is a valid id
+     */
     public static boolean isIDNumValid(int idNum) {
 
         // Makes sure id num is 7 digits long
@@ -41,6 +57,22 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates "title" field
+     * 
+     * <p>
+     * A valid title is:
+     * </p>
+     * 
+     * <ol>
+     * <li>A string</li>
+     * <li>1 or more characters</li>
+     * <li>Less than 151 characters</li>
+     * </ol>
+     * 
+     * @param title String that represents the title to be validated
+     * @return <b>boolean titleIsValid:</b> Whether string provided is a valid title
+     */
     public static boolean isTitleValid(String title) {
 
         // Makes sure title is 1 or more characters and less than 150 characters
@@ -49,6 +81,23 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates "description" field
+     * 
+     * <p>
+     * A valid description is:
+     * </p>
+     * 
+     * <ol>
+     * <li>A string</li>
+     * <li>1 or more characters</li>
+     * <li>Less than 1001 characters</li>
+     * </ol>
+     * 
+     * @param description String that represents the description to be validated
+     * @return <b>boolean descriptionIsValid:</b> Whether string provided is a valid
+     *         description
+     */
     public static boolean isDescriptionValid(String description) {
 
         // Makes sure desc is 1 or more characters and less than 1000 characters
@@ -57,6 +106,22 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates "date" field
+     * 
+     * <p>
+     * A valid date string is:
+     * </p>
+     * 
+     * <ol>
+     * <li>A string or LocalDate</li>
+     * <li>In the format: YYYY-MM-DD</li>
+     * </ol>
+     * 
+     * @param date String that represents the date string to be validated
+     * @return <b>boolean dateIsValid:</b> Whether string provided is a valid
+     *         date string
+     */
     public static boolean isDateStringValid(String dateString) {
 
         // Attempts to parse date from dateString provided
@@ -72,6 +137,22 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates "amount" field
+     * 
+     * <p>
+     * A valid amount is:
+     * </p>
+     * 
+     * <ol>
+     * <li>A double</li>
+     * <li>Not negative</li>
+     * </ol>
+     * 
+     * @param amount Double that represents the amount to be validated
+     * @return <b>boolean amountIsValid:</b> Whether double provided is a valid
+     *         amount
+     */
     public static boolean isAmountValid(double amount) {
 
         // Makes sure amount is greater than or equal to 0
@@ -80,6 +161,23 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates "type" field
+     * 
+     * <p>
+     * A valid type string is:
+     * </p>
+     * 
+     * <ol>
+     * <li>A string</li>
+     * <li>Either "DONATION" or "EXPENSE" (not case sensitive, and can also- be a
+     * partial string)</li>
+     * </ol>
+     * 
+     * @param type String that represents the type to be validated
+     * @return <b>boolean stringIsValid:</b> Whether string provided is a valid
+     *         type
+     */
     public static boolean isTransactionTypeStringValid(String typeString) {
 
         if (typeString.isBlank())
@@ -94,6 +192,23 @@ public class Transaction {
 
     }
 
+    /**
+     * Validates all fields
+     * 
+     * <p>
+     * Goes through each piece field provided and validates them
+     * </p>
+     * 
+     * @param id          Integer that represents the id to be validated
+     * @param title       String that represents the title to be validated
+     * @param description String that represents the description to be validated
+     * @param date        LocalDate that represents the date to be validated
+     * @param amount      double that represents the amount to be validated
+     * @param type        TransactionType that represents the type to be validated
+     * @return <b>boolean transactionInfoIsValid:</b> Whether transaction info
+     *         provided is valid or not. If even just 1 field is invalid, will
+     *         return false
+     */
     public static boolean isTransactionInfoValid(
             int id,
             String title,
@@ -146,6 +261,14 @@ public class Transaction {
 
     // -- == [[ STATIC METHODS ]] == -- \\
 
+    /**
+     * <p>
+     * Loops through every transaction in the TransactionList hashmap and prints
+     * each transaction to the console
+     * </p>
+     * 
+     * @deprecated
+     */
     public static void displayCurrentTransactionList() {
 
         // Loops through every entry in TransactionList hashmap
@@ -163,6 +286,15 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Takes the string provided and returns a LocalDate object from it. If string
+     * provided is not a valid date string, will return null
+     * </p>
+     * 
+     * @param dateString The string to be converted into a LocalDate
+     * @return <b>LocalDate date:</b> The LocalDate object from the string
+     */
     public static LocalDate getDateFromString(String dateString) {
 
         try {
@@ -173,6 +305,16 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Takes the string provided and returns a TransactionType enum from it. If
+     * string provided is not a valid TransactionType string, will return null
+     * </p>
+     * 
+     * @param typeString The string to be converted into a TransactionType
+     * @return <b>TransactionType date:</b> The TransactionType enum from the
+     *         string
+     */
     public static TransactionType getTransactionTypeFromString(String typeString) {
 
         // Lowercases string provided and
@@ -190,6 +332,17 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Adds up all transactions from the TransactionList hashmap that have a type of
+     * "EXPENSE" and returns the sum
+     * </p>
+     * 
+     * @return <b>double expensesTotal:</b> The total amount of money the library
+     *         has spent on expenses
+     * @deprecated
+     * @see TransactionService
+     */
     public static double getTotalExpenses() {
 
         double totalExpenses = 0;
@@ -213,6 +366,17 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Adds up all transactions from the TransactionList hashmap that have a type of
+     * "DONATIONS" and returns the sum
+     * </p>
+     * 
+     * @return <b>double donationsTotal:</b> The total amount of money the library
+     *         has received in donations
+     * @deprecated
+     * @see TransactionService
+     */
     public static double getTotalDonations() {
 
         double totalDonations = 0;
@@ -236,6 +400,15 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Returns the difference of donations total minus expenses total
+     * </p>
+     * 
+     * @return <b>double networth:</b> The net worth of the librarys
+     * @deprecated
+     * @see TransactionService
+     */
     public static double getNetWorth() {
 
         // Gets all donations summed and subtracts all expenses from it
@@ -247,6 +420,23 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Takes the string provided and converts it into a transaction object
+     * </p>
+     * 
+     * <p>
+     * String provided must be in the format:
+     * '<b>
+     * ID#,Title,Description,Date,Amount,Type
+     * </b>'
+     * </p>
+     * 
+     * @param line The line to be converted into a transaction
+     * @return <b>Transaction transaction:</b> The transaction object created from
+     *         the string
+     * @deprecated
+     */
     private static Transaction createTransactionFromTextLine(String line) {
 
         // Initializes newTransaction variable
@@ -297,6 +487,15 @@ public class Transaction {
         return newTransaction;
     }
 
+    /**
+     * <p>
+     * Gets the file extension from a file path string
+     * </p>
+     * 
+     * @param filePath The String of the file path
+     * @return <b>String fileExtension:</b> The file extension of the path
+     * @deprecated
+     */
     private static String getFileExtension(String filePath) {
 
         // Gets last index of "." and checks to make sure it exists
@@ -316,6 +515,16 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Checks if a file path is a valid text file
+     * </p>
+     * 
+     * @param filePath The String of the file path
+     * @return <b>boolean filePathIsAValidTextFile:</b> Whether the file path
+     *         provided leads to a valid text file
+     * @deprecated
+     */
     public static boolean isFilePathAValidTextFile(String filePath) {
 
         try {
@@ -344,6 +553,17 @@ public class Transaction {
 
     // -- == [[ STATIC CRUD METHODS ]] == -- \\
 
+    /**
+     * <p>
+     * Reads a text file line by line and creates an ArrayList of transaction
+     * objects from each line
+     * </p>
+     * 
+     * @param filePath The String of the text file path
+     * @return <b>ArrayList<Transaction>: transactionsFromTextFile</b> The list of
+     *         transaction objects
+     * @deprecated
+     */
     public static ArrayList<Transaction> getTransactionsFromTextFile(String filePath) {
 
         // Initializes empty arraylist of transactions and text file scanner
@@ -403,6 +623,16 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Adds the transaction provided to the transaction list hashmap
+     * </p>
+     * 
+     * @param Transaction the transaction object to add
+     * @return <b>Transaction transaction:</b> The transaction that was added to the
+     *         transaction list hashmap
+     * @deprecated
+     */
     public static Transaction addTransactionToList(Transaction transactionToAdd) {
 
         // Adds transaction provided to list
@@ -413,6 +643,16 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Gets the specified transaction from the transaction list hashmap by id
+     * </p>
+     * 
+     * @param id The id of the transaction to get from the transaction list
+     * @return <b>Transaction transaction:</b> the transaction from the transaction
+     *         list hashmap
+     * @deprecated
+     */
     public static Transaction getTransactionByID(int id) {
 
         // Gets transaction from list and returns it (or null if no such transaction
@@ -422,6 +662,16 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Removes the specified transaction from the transaction list hashmap by id
+     * </p>
+     * 
+     * @param id The id of the transaction to remove from the transaction list
+     * @return <b>boolean success:</b> Whether the transaction was successfully
+     *         removed from the transaction list hashmap
+     * @deprecated
+     */
     public static boolean removeTransactionFromList(int id) {
 
         // Attempts to remove transaction from transaction list hashmap
@@ -438,6 +688,20 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Overwrites the specified transaction in the transaction list hashmap with new
+     * transaction info provided
+     * </p>
+     * 
+     * @param id                 The id of the transaction to edit in the
+     *                           transaction list
+     * @param newTransactionInfo the new info to overwrite the current transaction's
+     *                           info
+     * @return <b>Transaction editedTransactionInfo:</b> The edited transaction's
+     *         new info
+     * @deprecated
+     */
     public static Transaction editTransactionInList(int id, Transaction newTransactionInfo) {
 
         try {
@@ -488,10 +752,31 @@ public class Transaction {
 
     // -- == [[ CONSTRUCTORS ]] == -- \\
 
+    /**
+     * Empty constructor needed by TransactionRepository
+     * 
+     * @see TransactionRepository
+     */
     public Transaction() {
-        
+
     }
 
+    /**
+     * Main Transaction constructor
+     * 
+     * <p>
+     * Takes field data provided and creates a transaction object from them
+     * </p>
+     * 
+     * @param title       Title of the transaction
+     * @param description Description of the transaction
+     * @param date        Date the transaction took place
+     * @param amount      Amount the transaction involved, default is 0
+     * @param type        Type of the transaction, either "DONATION" or "EXPENSE"
+     * @throws Exception If there was an error creating the transaction object, will
+     *                   throw an exception that needs to be handled outside of the
+     *                   constructor
+     */
     public Transaction(String title, String description, LocalDate date, double amount, TransactionType type)
             throws Exception {
 
@@ -567,6 +852,26 @@ public class Transaction {
 
     // -- == [[ METHODS ]] == -- \\
 
+    /**
+     * <p>
+     * Overrides default toString method and replaces it with the format:
+     * </p>
+     * 
+     * <br/>
+     * <b>ID#:</b> 1234567
+     * <br/>
+     * <b>Title:</b> Title String
+     * <br/>
+     * <b>Description:</b> Description String
+     * <br/>
+     * <b>Date:</b> 1970-01-01
+     * <br/>
+     * <b>Amount:</b> 403.23
+     * <br/>
+     * <b>Type:</b> DONATION
+     * <br/>
+     * 
+     */
     @Override
     public String toString() {
 
@@ -585,6 +890,14 @@ public class Transaction {
 
     }
 
+    /**
+     * <p>
+     * Generates a random 7 digit integer
+     * </p>
+     * 
+     * @return <b>int id:</b> The randomly generated id
+     * @deprecated
+     */
     private int generateId() {
 
         // Generates a random 7 digit integer
