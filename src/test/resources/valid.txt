@@ -1,0 +1,20 @@
+9197142,Donation by Michael Scott,Donated to the local library,2026-02-07,25.5,DONATION
+6194739,DVD,replacement,2026-03-17,86.56,EXPENSE
+5523206,Donation by Angela Martin,Donated to the local library,2026-02-17,41.02,DONATION
+7030045,sculpture,new,2026-06-01,5.97,EXPENSE
+8307325,marker,replacement,2026-04-21,28.68,EXPENSE
+3769494,Donation by Creed Bratton,Donated to the local library,2026-03-10,34.2,DONATION
+7864213,magazine,new,2026-06-24,70.29,EXPENSE
+9611139,canvas,replacement,2026-05-31,51.06,EXPENSE
+4169606,dictionary,replacement,2026-03-09,33.0,EXPENSE
+4208954,Donation by Jim Halpert,Donated to the local library,2026-03-05,25.62,DONATION
+7769874,Donation by Andy Bernard,Donated to the local library,2026-05-04,55.08,DONATION
+3048009,marker,restock,2026-02-02,66.25,EXPENSE
+1015444,Donation by Andy Bernard,Donated to the local library,2026-05-20,1.58,DONATION
+5353374,Donation by Kelly Kapoor,Donated to the local library,2026-01-12,29.51,DONATION
+2447966,painting,restock,2026-01-27,45.0,EXPENSE
+2145317,Donation by Oscar Martinez,Donated to the local library,2026-03-23,97.83,DONATION
+3417843,book,restock,2026-02-09,20.74,EXPENSE
+5765793,canvas,replacement,2026-02-06,93.27,EXPENSE
+3330847,Donation by Michael Scott,Donated to the local library,2026-02-26,42.83,DONATION
+7314352,Donation by Creed Bratton,Donated to the local library,2026-01-13,49.72,DONATION
