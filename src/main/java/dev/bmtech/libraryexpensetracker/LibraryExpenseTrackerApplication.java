@@ -47,7 +47,7 @@ public class LibraryExpenseTrackerApplication {
      * Sets system properties based on user input and then starts the spring boot
      * server
      * 
-     * @param args
+     * @param args Application arguments passed from main method
      */
     public static void main(String[] args) {
 

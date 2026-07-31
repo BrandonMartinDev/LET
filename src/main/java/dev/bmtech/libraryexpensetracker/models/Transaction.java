@@ -21,12 +21,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+/**
+ * Main transaction class. Represents a transaction in the LET
+ * 
+ * @apiNote
+ *          <p>
+ *          Uses JPA annotations to map class to transaction table in database
+ *          </p>
+ */
 @Entity
 @Table(name = "transaction")
 public class Transaction {
 
     // -- == [[ ENUMS ]] == -- \\
 
+    /**
+     * Enum that differentiates a transaction between a type of expense or donation
+     */
     public enum TransactionType {
         DONATION,
         EXPENSE
@@ -118,7 +129,7 @@ public class Transaction {
      * <li>In the format: YYYY-MM-DD</li>
      * </ol>
      * 
-     * @param date String that represents the date string to be validated
+     * @param dateString String that represents the date string to be validated
      * @return <b>boolean dateIsValid:</b> Whether string provided is a valid
      *         date string
      */
@@ -174,7 +185,7 @@ public class Transaction {
      * partial string)</li>
      * </ol>
      * 
-     * @param type String that represents the type to be validated
+     * @param typeString String that represents the type to be validated
      * @return <b>boolean stringIsValid:</b> Whether string provided is a valid
      *         type
      */
@@ -254,6 +265,17 @@ public class Transaction {
 
     private static DecimalFormat df = new DecimalFormat("#.##");
 
+    /**
+     * <s>The transaction list hashmap - this is where all transactions are stored
+     * directly in the application</s>
+     *
+     * <p>
+     * TransactionList has been deprecated in favor of adding a database to track
+     * transactions
+     * </p>
+     *
+     * @deprecated
+     */
     public static HashMap<Integer, Transaction> TransactionList = new HashMap<Integer, Transaction>(); // TransactionList
                                                                                                        // hashmap, this
                                                                                                        // is
@@ -560,7 +582,7 @@ public class Transaction {
      * </p>
      * 
      * @param filePath The String of the text file path
-     * @return <b>ArrayList<Transaction>: transactionsFromTextFile</b> The list of
+     * @return <b>ArrayList transactionsFromTextFile:</b> The list of
      *         transaction objects
      * @deprecated
      */
@@ -628,7 +650,7 @@ public class Transaction {
      * Adds the transaction provided to the transaction list hashmap
      * </p>
      * 
-     * @param Transaction the transaction object to add
+     * @param transactionToAdd the transaction object to add
      * @return <b>Transaction transaction:</b> The transaction that was added to the
      *         transaction list hashmap
      * @deprecated

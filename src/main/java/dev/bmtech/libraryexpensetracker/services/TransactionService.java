@@ -114,7 +114,7 @@ public class TransactionService {
      * returns them as a List of Transaction objects
      * </p>
      * 
-     * @return <b>List<Transaction> transactionList:</b> All transactions in the
+     * @return <b>List transactionList:</b> All transactions in the
      *         database
      * @see TransactionRepository
      */

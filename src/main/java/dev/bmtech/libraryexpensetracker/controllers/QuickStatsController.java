@@ -26,7 +26,7 @@ public class QuickStatsController {
      * TransactionService and returns it as a JSON object to the requester
      * </p>
      * 
-     * @return HashMap<String, Double> quickStats
+     * @return HashMap quickStats
      * 
      * @see TransactionService
      */

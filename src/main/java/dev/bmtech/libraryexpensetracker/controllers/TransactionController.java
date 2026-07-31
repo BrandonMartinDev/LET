@@ -27,7 +27,7 @@ public class TransactionController {
      * array of transaction objects
      * </p>
      * 
-     * @return <b>List<Transaction> transactions:</b> The list of transactions
+     * @return <b>List transactions:</b> The list of transactions
      * @see TransactionService
      */
     @GetMapping("/api/transaction")
